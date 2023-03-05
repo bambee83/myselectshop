@@ -37,5 +37,4 @@ public class ProductController {
         // 응답 보내기 (업데이트된 상품 id)
         return productService.updateProduct(id, requestDto, request);
     }
-
 }

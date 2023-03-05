@@ -24,8 +24,8 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
     @Transactional
     public ProductResponseDto createProduct(ProductRequestDto requestDto, HttpServletRequest request) {
@@ -56,6 +56,7 @@ public class ProductService {
         }
     }
 
+
     @Transactional(readOnly = true)
     public List<ProductResponseDto> getProducts(HttpServletRequest request) {
         // Request에서 Token 가져오기
@@ -63,7 +64,7 @@ public class ProductService {
         Claims claims;
 
         // 토큰이 있는 경우에만 관심상품 조회 가능
-        if (token != null) {
+        if(token != null) {
             // Token 검증
             if (jwtUtil.validateToken(token)) {
                 // 토큰에서 사용자 정보 가져오기
@@ -97,7 +98,7 @@ public class ProductService {
 
             return list;
 
-        } else {
+        }else {
             return null;
         }
     }
@@ -137,11 +138,10 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateBySearch (Long id, ItemDto itemDto){
+    public void updateBySearch(Long id, ItemDto itemDto) {
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("해당 상품은 존재하지 않습니다.")
         );
         product.updateByItemDto(itemDto);
     }
-
 }
